@@ -1,0 +1,37 @@
+name: Build and Release Resource Pack
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Create zip file
+        run: |
+          zip -r resource-pack.zip . -x ".git/*" ".github/*" "*.md"
+      
+      - name: Delete existing release
+        run: |
+          gh release delete latest --yes || true
+          git push origin :refs/tags/latest || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest
+          name: Resource Pack
+          files: resource-pack.zip
+          body: "Updated: $(date +'%Y-%m-%d %H:%M:%S UTC')"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
