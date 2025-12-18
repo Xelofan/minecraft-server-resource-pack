@@ -1,0 +1,8 @@
+{
+  "music_disc.lava_chicken": {
+    "replace": true,
+    "sounds": [
+      "records/lava_chicken"
+    ]
+  }
+}
