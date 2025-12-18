@@ -30,7 +30,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: latest
-          name: Resource Pack
+          name: $(date +'%Y-%m-%d %H:%M:%S UTC')
           files: resource-pack.zip
           body: "Updated: $(date +'%Y-%m-%d %H:%M:%S UTC')"
         env:
